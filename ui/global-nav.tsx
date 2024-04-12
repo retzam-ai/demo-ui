@@ -21,9 +21,9 @@ export function GlobalNav() {
           className="group flex w-full items-center gap-x-2.5"
           onClick={close}
         >
-          <div className="h-7 w-7 rounded-full border border-white/30 group-hover:border-white/50">
+          <div className="h-7 w-7 overflow-hidden rounded-full border border-white/30 group-hover:border-white/50">
             <Image
-              className="relative"
+              className="h-full w-full object-cover"
               src="/logo.png"
               alt="retzam.ai Logo"
               width={180}
