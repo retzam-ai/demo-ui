@@ -1,13 +1,13 @@
 'use client';
 
 import { demos, type Item } from '#/lib/demos';
-import { NextLogo } from '#/ui/next-logo';
 import Link from 'next/link';
 import { useSelectedLayoutSegment } from 'next/navigation';
 import { MenuAlt2Icon, XIcon } from '@heroicons/react/solid';
 import clsx from 'clsx';
 import { useState } from 'react';
 import Byline from './byline';
+import Image from 'next/image';
 
 export function GlobalNav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,11 +22,18 @@ export function GlobalNav() {
           onClick={close}
         >
           <div className="h-7 w-7 rounded-full border border-white/30 group-hover:border-white/50">
-            <NextLogo />
+            <Image
+              className="relative"
+              src="/logo.png"
+              alt="retzam.ai Logo"
+              width={180}
+              height={37}
+              priority
+            />
           </div>
 
           <h3 className="font-semibold tracking-wide text-gray-400 group-hover:text-gray-50">
-            App Router
+            retzam.ai
           </h3>
         </Link>
       </div>

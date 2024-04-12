@@ -1,4 +1,4 @@
-import { VercelLogo } from '#/ui/vercel-logo';
+import Image from 'next/image';
 
 export default function Byline({ className }: { className: string }) {
   return (
@@ -10,7 +10,14 @@ export default function Byline({ className }: { className: string }) {
           <div className="text-sm text-gray-400">By</div>
           <a href="https://vercel.com" title="Vercel">
             <div className="w-16 text-gray-100 hover:text-gray-50">
-              <VercelLogo />
+              <Image
+                className="relative"
+                src="/retzam.ai.svg"
+                alt="retzam.ai Logo"
+                width={180}
+                height={37}
+                priority
+              />
             </div>
           </a>
         </div>
@@ -18,20 +25,11 @@ export default function Byline({ className }: { className: string }) {
         <div className="text-sm text-gray-400">
           <a
             className="underline decoration-dotted underline-offset-4 transition-colors hover:text-gray-300"
-            href="https://github.com/vercel/app-playground"
+            href="https://github.com/retzam-ai"
             target="_blank"
             rel="noreferrer"
           >
             View code
-          </a>
-          {' or '}
-          <a
-            className="underline decoration-dotted underline-offset-4 transition-colors hover:text-gray-300"
-            href="https://vercel.com/templates/next.js/app-directory"
-            target="_blank"
-            rel="noreferrer"
-          >
-            deploy your own
           </a>
         </div>
       </div>
