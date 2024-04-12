@@ -15,7 +15,7 @@ export async function GET(req: NextRequest): Promise<Response | ImageResponse> {
 
     const title = searchParams.has('title')
       ? searchParams.get('title')
-      : 'App Router Playground';
+      : 'retzam.ai Demo';
 
     return new ImageResponse(
       (
