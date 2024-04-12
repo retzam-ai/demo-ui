@@ -1,4 +1,3 @@
-import { ExternalLink } from '#/ui/external-link';
 import Link from 'next/link';
 
 export default function Page() {
@@ -6,7 +5,7 @@ export default function Page() {
     <div className="prose prose-sm prose-invert max-w-none">
       <h1 className="text-xl font-bold">Supervised Learning Models</h1>
 
-      <p>This page aims to illustrate supervised learning models.</p>
+      <p>This section aims to illustrate supervised learning models.</p>
       <p>
         This shows the precision, recall and accuracy of the models. <br />
         It also shows prediction results for each model.
