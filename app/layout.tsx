@@ -1,32 +1,37 @@
+'use client';
+
 import '#/styles/globals.css';
 import { AddressBar } from '#/ui/address-bar';
 import Byline from '#/ui/byline';
 import { GlobalNav } from '#/ui/global-nav';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: {
-    default: 'Next.js App Router',
-    template: '%s | Next.js App Router',
-  },
-  description:
-    'A playground to explore new Next.js App Router features such as nested layouts, instant loading states, streaming, and component level data fetching.',
-  openGraph: {
-    title: 'Next.js App Router Playground',
-    description:
-      'A playground to explore new Next.js App Router features such as nested layouts, instant loading states, streaming, and component level data fetching.',
-    images: [`/api/og?title=Next.js App Router`],
-  },
-  twitter: {
-    card: 'summary_large_image',
-  },
-};
+import {
+  UrqlProvider,
+  ssrExchange,
+  cacheExchange,
+  fetchExchange,
+  createClient,
+} from '@urql/next';
+import { useMemo } from 'react';
+import { SERVER_URL } from '#/constants';
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [client, ssr] = useMemo(() => {
+    const ssr = ssrExchange({
+      isClient: typeof window !== 'undefined',
+    });
+    const client = createClient({
+      url: SERVER_URL,
+      exchanges: [cacheExchange, ssr, fetchExchange],
+      suspense: true,
+    });
+
+    return [client, ssr];
+  }, []);
+
   return (
     <html lang="en" className="[color-scheme:dark]">
       <body className="bg-gray-1100 overflow-y-scroll bg-[url('/grid.svg')] pb-36">
@@ -41,7 +46,11 @@ export default function RootLayout({
             </div>
 
             <div className="bg-vc-border-gradient rounded-lg p-px shadow-lg shadow-black/20">
-              <div className="rounded-lg bg-black p-3.5 lg:p-6">{children}</div>
+              <div className="rounded-lg bg-black p-3.5 lg:p-6">
+                <UrqlProvider client={client} ssr={ssr}>
+                  {children}
+                </UrqlProvider>
+              </div>
             </div>
             <Byline className="fixed sm:hidden" />
           </div>
