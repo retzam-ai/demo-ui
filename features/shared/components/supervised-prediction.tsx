@@ -61,10 +61,6 @@ export default function SupervisedPrediction({
 }: SupervisedLearningPredictionProps) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery('(min-width: 768px)');
-  console.log('isDesktop: ', isDesktop);
-  const [predictionResult, predictionMutation] = useMutation(
-    TEST_SUPERVISED_LEARNING_MODELS,
-  );
 
   const onFormSubmitted = () => {
     setOpen(false);
