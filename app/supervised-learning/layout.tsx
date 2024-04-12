@@ -1,4 +1,3 @@
-import { getCategories } from '#/app/api/categories/getCategories';
 import { TabGroup } from '#/ui/tab-group';
 import React from 'react';
 import { Category } from '../api/categories/category';
@@ -18,7 +17,6 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  // const categories = await getCategories();
   const categories: Category[] = [
     {
       name: 'Cars',
