@@ -28,7 +28,7 @@ const Label = ({
 };
 export const Boundary = ({
   children,
-  labels = ['children'],
+  labels = ['retzam.ai'],
   size = 'default',
   color = 'default',
   animateRerendering = true,
