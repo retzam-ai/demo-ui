@@ -1,11 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '#/components/ui/card';
 import { SupervisedLearningPredictionModelsSchema } from '#/types';
 import { Check } from 'lucide-react';
 import Image from 'next/image';
-import { isEqual } from 'lodash';
 
 interface KNNModelProps {
   predictions: SupervisedLearningPredictionModelsSchema;
