@@ -1,15 +1,12 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '#/components/ui/card';
-import { SupervisedLearningPredictionModelsSchema } from '#/types';
+import { useSupervisedLearningPredictionStore } from '#/store/supervised-learning-predictions';
 import { Check } from 'lucide-react';
 import Image from 'next/image';
 
-interface KNNModelProps {
-  predictions: SupervisedLearningPredictionModelsSchema;
-}
-
-export default function KNNModel({ predictions }: KNNModelProps) {
+export default function KNNModel() {
+  const { predictions } = useSupervisedLearningPredictionStore();
   return (
     <Card>
       <CardHeader>
