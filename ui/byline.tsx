@@ -8,18 +8,16 @@ export default function Byline({ className }: { className: string }) {
       <div className="flex flex-col justify-between space-y-2 rounded-lg bg-black p-3.5 lg:px-5 lg:py-3">
         <div className="flex items-center gap-x-1.5">
           <div className="text-sm text-gray-400">By</div>
-          <a href="https://vercel.com" title="Vercel">
-            <div className="w-16 text-gray-100 hover:text-gray-50">
-              <Image
-                className="relative"
-                src="/retzam.ai.svg"
-                alt="retzam.ai Logo"
-                width={180}
-                height={37}
-                priority
-              />
-            </div>
-          </a>
+          <div className="w-16 text-gray-100 hover:text-gray-50">
+            <Image
+              className="relative"
+              src="/retzam.ai.svg"
+              alt="retzam.ai Logo"
+              width={180}
+              height={37}
+              priority
+            />
+          </div>
         </div>
 
         <div className="text-sm text-gray-400">
