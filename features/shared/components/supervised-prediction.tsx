@@ -70,7 +70,9 @@ export default function SupervisedPrediction({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">Predict Car Manufacturer</Button>
+          <Button variant="outline" className="w-full bg-white text-black">
+            Predict Car Manufacturer
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -91,11 +93,11 @@ export default function SupervisedPrediction({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button className="m-2" variant="outline">
+        <Button className="w-full bg-white text-black" variant="outline">
           Predict Car Manufacturer
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="overflow-y-auto">
+      <DrawerContent className="overflow-x-scroll">
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
             <DrawerTitle>Predict Car Manufacturer</DrawerTitle>
@@ -104,7 +106,7 @@ export default function SupervisedPrediction({
               manufacturer
             </DrawerDescription>
           </DrawerHeader>
-          <div className="overflow-scroll">
+          <div className="overflow-auto">
             <SupervisedPredictionForm
               {...{ predictions, onPredictionTriggered, onFormSubmitted }}
             />
@@ -188,153 +190,206 @@ function SupervisedPredictionForm({
       <div className="flex items-center justify-center space-x-2">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField
-              control={form.control}
-              name="year"
-              render={({ field }) => (
-                <FormItem className="flex items-center justify-between space-x-4">
-                  <Label htmlFor="year" className="text-right">
-                    Year
-                  </Label>
-                  <FormControl>
-                    <Input type="number" {...field} placeholder="e.g 1999" />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="price"
-              render={({ field }) => (
-                <FormItem className="flex items-center justify-between space-x-4">
-                  <Label htmlFor="price" className="text-right">
-                    Price
-                  </Label>
-                  <FormControl>
-                    <Input type="number" {...field} placeholder="e.g 15,000" />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-12 gap-4 space-x-2">
+              <div className="col-span-6">
+                <FormField
+                  control={form.control}
+                  name="year"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col items-center justify-between space-x-4">
+                      <Label htmlFor="year" className="text-right">
+                        Year
+                      </Label>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          {...field}
+                          placeholder="e.g 1999"
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-            <FormField
-              control={form.control}
-              name="transmission"
-              render={({ field }) => (
-                <FormItem>
-                  <Label>Transmission</Label>
+              <div className="col-span-6">
+                <FormField
+                  control={form.control}
+                  name="price"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col items-center justify-between space-x-4">
+                      <Label htmlFor="price" className="text-right">
+                        Price
+                      </Label>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          {...field}
+                          placeholder="e.g 15,000"
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
 
-                  <FormControl>
-                    <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger className="h-auto text-left">
-                        <SelectValue placeholder="Manual" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {CAR_TRANSMISSIONS?.map((transmission, index) => (
-                          <SelectItem key={index} value={transmission.value}>
-                            <div>
-                              <h3 className="font-medium">
-                                {transmission.label}
-                              </h3>
-                            </div>
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
+            <div className="grid grid-cols-12 gap-4 space-x-2">
+              <div className="col-span-6">
+                <FormField
+                  control={form.control}
+                  name="mileage"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col items-center justify-between space-x-4">
+                      <Label htmlFor="mileage" className="text-right">
+                        Mileage
+                      </Label>
+                      <FormControl>
+                        <Input type="number" {...field} placeholder="e.g 1" />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <div className="col-span-6">
+                <FormField
+                  control={form.control}
+                  name="tax"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col items-center justify-between space-x-4">
+                      <Label htmlFor="tax" className="text-right">
+                        Tax
+                      </Label>
+                      <FormControl>
+                        <Input type="number" {...field} placeholder="e.g 5" />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
 
-            <FormField
-              control={form.control}
-              name="fuelType"
-              render={({ field }) => (
-                <FormItem>
-                  <Label>Fuel Type</Label>
+            <div className="grid grid-cols-12 gap-4 space-x-2">
+              <div className="col-span-6">
+                <FormField
+                  control={form.control}
+                  name="mpg"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col items-center justify-between space-x-4">
+                      <Label htmlFor="mpg" className="text-right">
+                        MPG
+                      </Label>
+                      <FormControl>
+                        <Input type="number" {...field} placeholder="e.g 5" />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-                  <FormControl>
-                    <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger className="h-auto text-left">
-                        <SelectValue placeholder="Manual" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {CAR_FUEL_TYPES?.map((type, index) => (
-                          <SelectItem key={index} value={type.value}>
-                            <div>
-                              <h3 className="font-medium">{type.label}</h3>
-                            </div>
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
+              <div className="col-span-6">
+                <FormField
+                  control={form.control}
+                  name="engineSize"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col items-center justify-between space-x-4">
+                      <Label htmlFor="engineSize" className="text-right">
+                        Engine Size
+                      </Label>
+                      <FormControl>
+                        <Input type="number" {...field} placeholder="e.g 5" />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-12 gap-4 space-x-2">
+              <div className="col-span-6">
+                <FormField
+                  control={form.control}
+                  name="transmission"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label>Transmission</Label>
 
-            <FormField
-              control={form.control}
-              name="mileage"
-              render={({ field }) => (
-                <FormItem className="flex items-center justify-between space-x-4">
-                  <Label htmlFor="mileage" className="text-right">
-                    Mileage
-                  </Label>
-                  <FormControl>
-                    <Input type="number" {...field} placeholder="e.g 1" />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+                      <FormControl>
+                        <Select
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
+                          <SelectTrigger className="h-auto text-left">
+                            <SelectValue placeholder="Manual" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {CAR_TRANSMISSIONS?.map((transmission, index) => (
+                              <SelectItem
+                                key={index}
+                                value={transmission.value}
+                              >
+                                <div>
+                                  <h3 className="font-medium">
+                                    {transmission.label}
+                                  </h3>
+                                </div>
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
 
-            <FormField
-              control={form.control}
-              name="tax"
-              render={({ field }) => (
-                <FormItem className="flex items-center justify-between space-x-4">
-                  <Label htmlFor="tax" className="text-right">
-                    Tax
-                  </Label>
-                  <FormControl>
-                    <Input type="number" {...field} placeholder="e.g 5" />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="mpg"
-              render={({ field }) => (
-                <FormItem className="flex items-center justify-between space-x-4">
-                  <Label htmlFor="mpg" className="text-right">
-                    MPG
-                  </Label>
-                  <FormControl>
-                    <Input type="number" {...field} placeholder="e.g 5" />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="engineSize"
-              render={({ field }) => (
-                <FormItem className="flex items-center justify-between space-x-4">
-                  <Label htmlFor="engineSize" className="text-right">
-                    Engine Size
-                  </Label>
-                  <FormControl>
-                    <Input type="number" {...field} placeholder="e.g 5" />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <Button type="submit">Save changes</Button>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div className="col-span-6">
+                <FormField
+                  control={form.control}
+                  name="fuelType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label>Fuel Type</Label>
+
+                      <FormControl>
+                        <Select
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
+                          <SelectTrigger className="h-auto text-left">
+                            <SelectValue placeholder="Manual" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {CAR_FUEL_TYPES?.map((type, index) => (
+                              <SelectItem key={index} value={type.value}>
+                                <div>
+                                  <h3 className="font-medium">{type.label}</h3>
+                                </div>
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="my-4 flex justify-center">
+              <Button
+                type="submit"
+                variant="outline"
+                className="w-full bg-white text-black"
+              >
+                Submit to predict
+              </Button>
+            </div>
           </form>
         </Form>
       </div>
