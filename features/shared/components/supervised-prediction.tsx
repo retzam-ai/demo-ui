@@ -24,7 +24,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import {
-  SupervisedLearningPredictionModelsSchema,
+  SupervisedLearningPredictionModelsType,
   supervisedLearningPredictionSchema,
 } from '#/types';
 import { useMutation } from 'urql';
@@ -47,17 +47,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '#/components/ui/dialog';
+import { useSupervisedLearningPredictionStore } from '#/store/supervised-learning-predictions';
 
 interface SupervisedLearningPredictionProps {
-  predictions: SupervisedLearningPredictionModelsSchema;
-  onPredictionTriggered: (
-    predictions: SupervisedLearningPredictionModelsSchema,
-  ) => void;
+  predictions: SupervisedLearningPredictionModelsType;
 }
 
 export default function SupervisedPrediction({
   predictions,
-  onPredictionTriggered,
 }: SupervisedLearningPredictionProps) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery('(min-width: 768px)');
@@ -82,9 +79,7 @@ export default function SupervisedPrediction({
               manufacturer.
             </DialogDescription>
           </DialogHeader>
-          <SupervisedPredictionForm
-            {...{ predictions, onPredictionTriggered, onFormSubmitted }}
-          />
+          <SupervisedPredictionForm {...{ predictions, onFormSubmitted }} />
         </DialogContent>
       </Dialog>
     );
@@ -107,9 +102,7 @@ export default function SupervisedPrediction({
             </DrawerDescription>
           </DrawerHeader>
           <div className="overflow-auto">
-            <SupervisedPredictionForm
-              {...{ predictions, onPredictionTriggered, onFormSubmitted }}
-            />
+            <SupervisedPredictionForm {...{ predictions, onFormSubmitted }} />
           </div>
         </div>
         <DrawerFooter className="pt-2">
@@ -129,9 +122,10 @@ interface SupervisedPredictionFormProps
 
 function SupervisedPredictionForm({
   predictions,
-  onPredictionTriggered,
   onFormSubmitted,
 }: SupervisedPredictionFormProps) {
+  const { setSupervisedLearningPredictions } =
+    useSupervisedLearningPredictionStore();
   const [predictionResult, predictionMutation] = useMutation(
     TEST_SUPERVISED_LEARNING_MODELS,
   );
@@ -141,11 +135,11 @@ function SupervisedPredictionForm({
     resolver: zodResolver(supervisedLearningPredictionSchema),
   });
 
-  const onSubmit = (
+  const onSubmit = async (
     data: z.infer<typeof supervisedLearningPredictionSchema>,
   ) => {
     predictions.triggered = true;
-    onPredictionTriggered(predictions);
+    setSupervisedLearningPredictions(predictions);
 
     // Create array of data in required order
     const input = [6];
@@ -163,13 +157,13 @@ function SupervisedPredictionForm({
     };
 
     // K-Nearest Neighbors Predicition
-    predictKNN(variables);
     onFormSubmitted();
+    await Promise.all([predictKNN(variables)]);
   };
 
-  const predictKNN = (variables: { input: number[] }) => {
+  const predictKNN = async (variables: { input: number[] }) => {
     predictions.knn.isLoading = predictionResult.fetching;
-    onPredictionTriggered(predictions);
+    setSupervisedLearningPredictions(predictions);
 
     predictionMutation({ ...variables, model: 'knn' }).then((result) => {
       if (result.data?.supervisedLearningPrediction?.prediction) {
@@ -182,7 +176,7 @@ function SupervisedPredictionForm({
     });
 
     predictions.knn.isLoading = predictionResult.fetching;
-    onPredictionTriggered(predictions);
+    setSupervisedLearningPredictions(predictions);
   };
 
   return (
@@ -190,7 +184,7 @@ function SupervisedPredictionForm({
       <div className="flex items-center justify-center space-x-2">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-12 gap-4 space-x-2">
+            <div className="my-2 grid grid-cols-12 gap-4 space-x-2">
               <div className="col-span-6">
                 <FormField
                   control={form.control}
@@ -205,6 +199,7 @@ function SupervisedPredictionForm({
                           type="number"
                           {...field}
                           placeholder="e.g 1999"
+                          className="w-full"
                         />
                       </FormControl>
                     </FormItem>
@@ -226,6 +221,7 @@ function SupervisedPredictionForm({
                           type="number"
                           {...field}
                           placeholder="e.g 15,000"
+                          className="w-full"
                         />
                       </FormControl>
                     </FormItem>
@@ -234,7 +230,7 @@ function SupervisedPredictionForm({
               </div>
             </div>
 
-            <div className="grid grid-cols-12 gap-4 space-x-2">
+            <div className="my-2 grid grid-cols-12 gap-4 space-x-2">
               <div className="col-span-6">
                 <FormField
                   control={form.control}
@@ -245,7 +241,12 @@ function SupervisedPredictionForm({
                         Mileage
                       </Label>
                       <FormControl>
-                        <Input type="number" {...field} placeholder="e.g 1" />
+                        <Input
+                          type="number"
+                          {...field}
+                          placeholder="e.g 1"
+                          className="w-full"
+                        />
                       </FormControl>
                     </FormItem>
                   )}
@@ -262,7 +263,12 @@ function SupervisedPredictionForm({
                         Tax
                       </Label>
                       <FormControl>
-                        <Input type="number" {...field} placeholder="e.g 5" />
+                        <Input
+                          type="number"
+                          {...field}
+                          placeholder="e.g 5"
+                          className="w-full"
+                        />
                       </FormControl>
                     </FormItem>
                   )}
@@ -270,7 +276,7 @@ function SupervisedPredictionForm({
               </div>
             </div>
 
-            <div className="grid grid-cols-12 gap-4 space-x-2">
+            <div className="my-2 grid grid-cols-12 gap-4 space-x-2">
               <div className="col-span-6">
                 <FormField
                   control={form.control}
@@ -281,7 +287,12 @@ function SupervisedPredictionForm({
                         MPG
                       </Label>
                       <FormControl>
-                        <Input type="number" {...field} placeholder="e.g 5" />
+                        <Input
+                          type="number"
+                          {...field}
+                          placeholder="e.g 5"
+                          className="w-full"
+                        />
                       </FormControl>
                     </FormItem>
                   )}
@@ -298,7 +309,12 @@ function SupervisedPredictionForm({
                         Engine Size
                       </Label>
                       <FormControl>
-                        <Input type="number" {...field} placeholder="e.g 5" />
+                        <Input
+                          type="number"
+                          {...field}
+                          placeholder="e.g 5"
+                          className="w-full"
+                        />
                       </FormControl>
                     </FormItem>
                   )}
@@ -306,7 +322,7 @@ function SupervisedPredictionForm({
               </div>
             </div>
 
-            <div className="grid grid-cols-12 gap-4 space-x-2">
+            <div className="my-2 grid grid-cols-12 gap-4 space-x-2">
               <div className="col-span-6">
                 <FormField
                   control={form.control}
