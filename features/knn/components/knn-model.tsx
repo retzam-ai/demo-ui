@@ -1,22 +1,23 @@
 'use client';
 
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '#/components/ui/card';
+import { SupervisedLearningPredictionModelsSchema } from '#/types';
 import { Check } from 'lucide-react';
 import Image from 'next/image';
+import { isEqual } from 'lodash';
 
-interface Props {
-  isLoading: boolean;
-  prediction: string;
-  trigger: boolean;
+interface KNNModelProps {
+  predictions: SupervisedLearningPredictionModelsSchema;
 }
 
-export default function KNNModel(props: Props) {
+export default function KNNModel({ predictions }: KNNModelProps) {
   return (
     <Card>
       <CardHeader>
         <CardTitle>K-Nearest Neighbors</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-2">
         <div className="overflow-auto rounded-md bg-gray-800 p-4 text-white">
           <pre>
             <code>Classification report</code>
@@ -28,14 +29,15 @@ export default function KNNModel(props: Props) {
             />
           </pre>
         </div>
-        {props.trigger && (
-          <div className="overflow-auto rounded-md bg-gray-800 p-4 text-white">
+        {predictions.triggered && (
+          <div className=" overflow-auto rounded-md bg-gray-800 p-4 text-white">
             <p>Car Manufacturer:</p>
-            {props.isLoading ? (
+            {predictions.knn.isLoading ? (
               'Thinking...'
             ) : (
               <span className="flex items-center">
-                <Check className="bg-green-500" /> {props.prediction}
+                <Check className="bg-green-500" /> 🚙{' '}
+                {predictions.knn.prediction}
               </span>
             )}
           </div>

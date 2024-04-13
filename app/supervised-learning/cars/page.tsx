@@ -14,9 +14,21 @@ export default function SupervisedLearningModelsPage() {
     );
 
   const onPredictionTriggered = (
-    predictions: SupervisedLearningPredictionModelsSchema,
+    predictionResult: SupervisedLearningPredictionModelsSchema,
   ) => {
-    setPredictions({ ...predictions });
+    // setPredictions({ ...predictionResult });
+
+    // console.log('control onPredictionTriggered', predictionResult);
+
+    setPredictions((prevPredictions) => ({
+      ...prevPredictions,
+      triggered: predictionResult.triggered,
+      knn: {
+        ...prevPredictions.knn,
+        isLoading: predictionResult.knn.isLoading,
+        error: predictionResult.knn.error,
+      },
+    }));
   };
 
   return (
@@ -26,11 +38,7 @@ export default function SupervisedLearningModelsPage() {
         predictions={predictions}
         onPredictionTriggered={onPredictionTriggered}
       />
-      <KNNModel
-        isLoading={predictions.knn.isLoading}
-        prediction={predictions.knn.prediction}
-        trigger={predictions.triggered}
-      />
+      <KNNModel predictions={predictions} />
     </div>
   );
 }
