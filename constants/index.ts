@@ -1,13 +1,20 @@
+import {
+  ModelPredictionType,
+  SupervisedLearningPredictionModelsType,
+} from '#/types';
 import { Metadata } from 'next';
 
-export const DEFAULT_MODEL_QUERY_STATE = {
-  knn: {
-    isLoading: false,
-    prediction: '',
-    error: '',
-  },
-  triggered: false,
+export const DEFAULT_MODEL_PREDICTION: ModelPredictionType = {
+  prediction: '',
+  isLoading: false,
+  error: '',
 };
+
+export const DEFAULT_MODEL_QUERY_STATE: SupervisedLearningPredictionModelsType =
+  {
+    knn: DEFAULT_MODEL_PREDICTION,
+    triggered: false,
+  };
 
 export const metadata: Metadata = {
   title: {
