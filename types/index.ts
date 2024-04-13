@@ -21,11 +21,13 @@ export type SidebarLink = {
   variant: 'default' | 'ghost';
 };
 
-export type SupervisedLearningPredictionModelsSchema = {
-  knn: {
-    isLoading: boolean;
-    prediction: string;
-    error: string;
-  };
+export type ModelPredictionType = {
+  prediction: string;
+  isLoading: boolean;
+  error: string;
+};
+
+export type SupervisedLearningPredictionModelsType = {
+  knn: ModelPredictionType;
   triggered: boolean;
 };
