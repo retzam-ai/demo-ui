@@ -28,7 +28,7 @@ export default function KNNModel() {
           <div className=" overflow-auto rounded-md bg-gray-800 p-4 text-white">
             <p>Car Manufacturer:</p>
             {predictions.knn.isLoading ? (
-              'Thinking...'
+              '👽 Thinking...'
             ) : (
               <span className="flex items-center">
                 <Check className="mx-1 bg-green-500" />{' '}
