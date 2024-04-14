@@ -31,8 +31,8 @@ export default function KNNModel() {
               'Thinking...'
             ) : (
               <span className="flex items-center">
-                <Check className="bg-green-500" /> 🚙{' '}
-                {predictions.knn.prediction}
+                <Check className="mx-1 bg-green-500" />{' '}
+                {predictions.knn.prediction} 🚙
               </span>
             )}
           </div>
