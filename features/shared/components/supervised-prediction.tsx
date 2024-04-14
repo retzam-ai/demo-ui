@@ -228,7 +228,7 @@ function SupervisedPredictionForm({
                   render={({ field }) => (
                     <FormItem className="flex flex-col items-center justify-between space-x-4">
                       <Label htmlFor="price" className="text-right">
-                        Price(Euros)
+                        Price(€)
                       </Label>
                       <FormControl>
                         <Input
@@ -274,7 +274,7 @@ function SupervisedPredictionForm({
                   render={({ field }) => (
                     <FormItem className="flex flex-col items-center justify-between space-x-4">
                       <Label htmlFor="tax" className="text-right">
-                        Tax(Euros)
+                        Tax(€)
                       </Label>
                       <FormControl>
                         <Input
@@ -320,7 +320,7 @@ function SupervisedPredictionForm({
                   render={({ field }) => (
                     <FormItem className="flex flex-col items-center justify-between space-x-4">
                       <Label htmlFor="engineSize" className="text-right">
-                        Engine Size(Cylinders)
+                        Engine Size
                       </Label>
                       <FormControl>
                         <Input
