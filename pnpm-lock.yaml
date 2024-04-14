@@ -53,6 +53,9 @@ dependencies:
   install:
     specifier: 0.13.0
     version: 0.13.0
+  lodash:
+    specifier: 4.17.21
+    version: 4.17.21
   lucide-react:
     specifier: ^0.344.0
     version: 0.344.0(react@18.2.0)
@@ -109,6 +112,9 @@ devDependencies:
   '@tailwindcss/typography':
     specifier: 0.5.9
     version: 0.5.9(tailwindcss@3.3.1)
+  '@types/lodash':
+    specifier: 4.17.0
+    version: 4.17.0
   '@types/ms':
     specifier: 0.7.31
     version: 0.7.31
@@ -3964,6 +3970,10 @@ packages:
     dependencies:
       '@types/node': 18.11.17
     dev: false
+
+  /@types/lodash@4.17.0:
+    resolution: {integrity: sha512-t7dhREVv6dbNj0q17X12j7yDG4bD/DHYX7o5/DbDxobP0HnGPgpRz2Ej77aL7TZT3DSw13fqUTj8J4mMnqa7WA==}
+    dev: true
 
   /@types/mdast@3.0.11:
     resolution: {integrity: sha512-Y/uImid8aAwrEA24/1tcRZwpxX3pIFTSilcNDKSPn+Y2iDywSEachzRuvgAYYLR3wpGXAsMbv5lvKLDZLeYPAw==}
