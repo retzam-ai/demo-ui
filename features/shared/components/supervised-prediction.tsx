@@ -23,10 +23,7 @@ import { Label } from '#/components/ui/label';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import {
-  SupervisedLearningPredictionModelsType,
-  supervisedLearningPredictionSchema,
-} from '#/types';
+import { supervisedLearningPredictionSchema } from '#/types';
 import { useMutation } from 'urql';
 import { TEST_SUPERVISED_LEARNING_MODELS } from '#/utils/graphql/mutations';
 import { useState } from 'react';
@@ -48,14 +45,9 @@ import {
   DialogTrigger,
 } from '#/components/ui/dialog';
 import { useSupervisedLearningPredictionStore } from '#/store/supervised-learning-predictions';
+import { cloneDeep } from 'lodash';
 
-interface SupervisedLearningPredictionProps {
-  predictions: SupervisedLearningPredictionModelsType;
-}
-
-export default function SupervisedPrediction({
-  predictions,
-}: SupervisedLearningPredictionProps) {
+export default function SupervisedPrediction() {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery('(min-width: 768px)');
 
@@ -79,7 +71,7 @@ export default function SupervisedPrediction({
               manufacturer.
             </DialogDescription>
           </DialogHeader>
-          <SupervisedPredictionForm {...{ predictions, onFormSubmitted }} />
+          <SupervisedPredictionForm {...{ onFormSubmitted }} />
         </DialogContent>
       </Dialog>
     );
@@ -102,7 +94,7 @@ export default function SupervisedPrediction({
             </DrawerDescription>
           </DrawerHeader>
           <div className="overflow-auto">
-            <SupervisedPredictionForm {...{ predictions, onFormSubmitted }} />
+            <SupervisedPredictionForm {...{ onFormSubmitted }} />
           </div>
         </div>
         <DrawerFooter className="pt-2">
@@ -115,20 +107,20 @@ export default function SupervisedPrediction({
   );
 }
 
-interface SupervisedPredictionFormProps
-  extends SupervisedLearningPredictionProps {
+interface SupervisedPredictionFormProps {
   onFormSubmitted: () => void;
 }
 
 function SupervisedPredictionForm({
-  predictions,
   onFormSubmitted,
 }: SupervisedPredictionFormProps) {
-  const { setSupervisedLearningPredictions } =
+  const { predictions, setSupervisedLearningPredictions } =
     useSupervisedLearningPredictionStore();
   const [predictionResult, predictionMutation] = useMutation(
     TEST_SUPERVISED_LEARNING_MODELS,
   );
+
+  const predictionState = cloneDeep(predictions);
 
   const form = useForm<z.infer<typeof supervisedLearningPredictionSchema>>({
     defaultValues: {},
@@ -138,8 +130,8 @@ function SupervisedPredictionForm({
   const onSubmit = async (
     data: z.infer<typeof supervisedLearningPredictionSchema>,
   ) => {
-    predictions.triggered = true;
-    setSupervisedLearningPredictions(predictions);
+    predictionState.triggered = true;
+    setSupervisedLearningPredictions(predictionState);
 
     // Create array of data in required order
     const input = [6];
@@ -162,21 +154,43 @@ function SupervisedPredictionForm({
   };
 
   const predictKNN = async (variables: { input: number[] }) => {
-    predictions.knn.isLoading = predictionResult.fetching;
-    setSupervisedLearningPredictions(predictions);
+    setSupervisedLearningPredictions({
+      ...predictionState,
+      knn: {
+        ...predictionState.knn,
+        isLoading: predictionResult.fetching,
+      },
+    });
 
     predictionMutation({ ...variables, model: 'knn' }).then((result) => {
       if (result.data?.supervisedLearningPrediction?.prediction) {
-        predictions.knn.prediction =
-          result.data.supervisedLearningPrediction.prediction.result.knn;
+        setSupervisedLearningPredictions({
+          ...predictionState,
+          knn: {
+            ...predictionState.knn,
+            prediction:
+              result.data.supervisedLearningPrediction.prediction.result.knn,
+          },
+        });
       } else {
-        predictions.knn.error =
-          result.data?.supervisedLearningPrediction?.errors[0]?.message;
+        setSupervisedLearningPredictions({
+          ...predictionState,
+          knn: {
+            ...predictionState.knn,
+            error:
+              result.data?.supervisedLearningPrediction?.errors[0]?.message,
+          },
+        });
       }
     });
 
-    predictions.knn.isLoading = predictionResult.fetching;
-    setSupervisedLearningPredictions(predictions);
+    setSupervisedLearningPredictions({
+      ...predictionState,
+      knn: {
+        ...predictionState.knn,
+        isLoading: predictionResult.fetching,
+      },
+    });
   };
 
   return (
@@ -403,7 +417,7 @@ function SupervisedPredictionForm({
                 variant="outline"
                 className="w-full bg-white text-black"
               >
-                Submit to predict
+                Submit for prediction
               </Button>
             </div>
           </form>
