@@ -24,6 +24,8 @@ export default function SupervisedLearningPageTitle() {
               <a
                 className="font-bold text-blue-500"
                 href="https://www.kaggle.com/datasets/meruvulikith/90000-cars-data-from-1970-to-2024"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 here
               </a>
