@@ -21,13 +21,13 @@ export default async function Layout({
     {
       name: 'Cars',
       slug: 'cars',
-      parent: 'supervised-learning',
+      parent: 'classification',
       count: 0,
     },
     {
       name: 'Injury',
       slug: 'injury',
-      parent: 'supervised-learning',
+      parent: 'classification',
       count: 0,
     },
   ];
