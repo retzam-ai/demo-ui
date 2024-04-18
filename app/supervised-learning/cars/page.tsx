@@ -1,15 +1,15 @@
 'use client';
 
-import KNNModel from '#/features/knn/components/knn-model';
-import SupervisedLearningPageTitle from '#/features/knn/components/title';
-import SupervisedPrediction from '#/features/shared/components/supervised-prediction';
+import CarsPredictionForm from '#/features/shared/components/cars-prediction-form';
+import CarsPageTitle from '#/features/cars/components/title';
+import CarsModels from '#/features/cars/components/cars-models';
 
-export default function SupervisedLearningModelsPage() {
+export default function CarsModelsPage() {
   return (
     <div className="space-y-4">
-      <SupervisedLearningPageTitle />
-      <SupervisedPrediction />
-      <KNNModel />
+      <CarsPageTitle />
+      <CarsPredictionForm />
+      <CarsModels />
     </div>
   );
 }

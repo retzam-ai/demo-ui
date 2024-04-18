@@ -24,6 +24,12 @@ export default async function Layout({
       parent: 'supervised-learning',
       count: 0,
     },
+    {
+      name: 'Injury',
+      slug: 'injury',
+      parent: 'supervised-learning',
+      count: 0,
+    },
   ];
 
   return (
