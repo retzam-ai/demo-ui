@@ -1,19 +1,13 @@
-import {
-  ModelPredictionType,
-  SupervisedLearningPredictionModelsType,
-} from '#/types';
+import { SupervisedLearningClassificationPredictionType } from '#/types';
 import { Metadata } from 'next';
 
-export const DEFAULT_MODEL_PREDICTION: ModelPredictionType = {
-  prediction: '',
-  isLoading: false,
-  error: '',
-};
-
-export const DEFAULT_MODEL_QUERY_STATE: SupervisedLearningPredictionModelsType =
+export const DEFAULT_MODEL_QUERY_STATE: SupervisedLearningClassificationPredictionType =
   {
-    knn: DEFAULT_MODEL_PREDICTION,
+    knn: '',
+    naiveBayes: '',
     triggered: false,
+    isLoading: false,
+    error: '',
   };
 
 export const metadata: Metadata = {
@@ -37,5 +31,5 @@ export const metadata: Metadata = {
 export const WEBSITE_NAME = 'retzam.ai - Demo';
 export const WEBSITE_AUTHOR = 'retzam.ai';
 
-// export const SERVER_URL = "http://localhost:8000/graphql";
-export const SERVER_URL = 'https://api.retzam.info/graphql';
+export const SERVER_URL = 'http://localhost:8000/graphql';
+// export const SERVER_URL = 'https://api.retzam.info/graphql';
