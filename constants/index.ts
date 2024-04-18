@@ -12,7 +12,7 @@ export const DEFAULT_MODEL_QUERY_STATE: SupervisedLearningClassificationPredicti
 
 export const metadata: Metadata = {
   title: {
-    default: 'Next.js App Router',
+    default: 'retzam.ai Demo Playground',
     template: '%s | Next.js App Router',
   },
   description:
