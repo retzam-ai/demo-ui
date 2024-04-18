@@ -2,12 +2,12 @@ import { RocketIcon } from '@radix-ui/react-icons';
 
 import { Alert, AlertDescription, AlertTitle } from '#/components/ui/alert';
 
-export default function SupervisedLearningPageTitle() {
+export default function CarsPageTitle() {
   return (
     <div>
       <Alert>
         <RocketIcon className="h-4 w-4" />
-        <AlertTitle>Supervised Learning Models</AlertTitle>
+        <AlertTitle>Car models</AlertTitle>
         <AlertDescription>
           <div className="prose prose-sm prose-invert max-w-none">
             <p className="mt-4">

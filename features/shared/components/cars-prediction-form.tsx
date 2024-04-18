@@ -23,7 +23,7 @@ import { Label } from '#/components/ui/label';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { supervisedLearningPredictionSchema } from '#/types';
+import { carsPredictionSchema } from '#/types';
 import { useMutation } from 'urql';
 import { TEST_SUPERVISED_LEARNING_MODELS } from '#/utils/graphql/mutations';
 import { useState } from 'react';
@@ -34,7 +34,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '#/components/ui/select';
-import { CAR_FUEL_TYPES, CAR_TRANSMISSIONS } from '#/features/knn/constants';
+import { CAR_FUEL_TYPES, CAR_TRANSMISSIONS } from '#/constants/cars';
 import useMediaQuery from '#/hooks/use-media-query';
 import {
   Dialog,
@@ -44,10 +44,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '#/components/ui/dialog';
-import { useSupervisedLearningPredictionStore } from '#/store/supervised-learning-predictions';
+import { useCarsStore } from '#/store/cars-store';
 import { cloneDeep } from 'lodash';
 
-export default function SupervisedPrediction() {
+export default function CarsPredictionForm() {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery('(min-width: 768px)');
 
@@ -114,24 +114,24 @@ interface SupervisedPredictionFormProps {
 function SupervisedPredictionForm({
   onFormSubmitted,
 }: SupervisedPredictionFormProps) {
-  const { predictions, setSupervisedLearningPredictions } =
-    useSupervisedLearningPredictionStore();
+  const { predictions, setCarsPredictions } = useCarsStore();
   const [predictionResult, predictionMutation] = useMutation(
     TEST_SUPERVISED_LEARNING_MODELS,
   );
 
   const predictionState = cloneDeep(predictions);
 
-  const form = useForm<z.infer<typeof supervisedLearningPredictionSchema>>({
+  const form = useForm<z.infer<typeof carsPredictionSchema>>({
     defaultValues: {},
-    resolver: zodResolver(supervisedLearningPredictionSchema),
+    resolver: zodResolver(carsPredictionSchema),
   });
 
-  const onSubmit = async (
-    data: z.infer<typeof supervisedLearningPredictionSchema>,
-  ) => {
+  const onSubmit = async (data: z.infer<typeof carsPredictionSchema>) => {
     predictionState.triggered = true;
-    setSupervisedLearningPredictions(predictionState);
+    setCarsPredictions({
+      ...predictionState,
+      triggered: predictionState.triggered,
+    });
 
     // Create array of data in required order
     const input = [6];
@@ -150,46 +150,42 @@ function SupervisedPredictionForm({
 
     // K-Nearest Neighbors Predicition
     onFormSubmitted();
-    await Promise.all([predictKNN(variables)]);
+    await predict(variables);
   };
 
-  const predictKNN = async (variables: { input: number[] }) => {
-    setSupervisedLearningPredictions({
+  const predict = async (variables: { input: number[] }) => {
+    predictionState.isLoading = true;
+    setCarsPredictions({
       ...predictionState,
-      knn: {
-        ...predictionState.knn,
-        isLoading: predictionResult.fetching,
-      },
+      isLoading: predictionState.isLoading,
     });
 
-    predictionMutation({ ...variables, model: 'knn' }).then((result) => {
-      if (result.data?.supervisedLearningPrediction?.prediction) {
-        setSupervisedLearningPredictions({
+    predictionMutation({ ...variables, dataset: 'cars' }).then((result) => {
+      if (result.data?.supervisedLearningClassificationPrediction?.prediction) {
+        predictionState.knn =
+          result.data.supervisedLearningClassificationPrediction.prediction.result.knn;
+        predictionState.naiveBayes =
+          result.data.supervisedLearningClassificationPrediction.prediction.result.naiveBayes;
+
+        setCarsPredictions({
           ...predictionState,
-          knn: {
-            ...predictionState.knn,
-            prediction:
-              result.data.supervisedLearningPrediction.prediction.result.knn,
-          },
+          knn: predictionState.knn,
+          naiveBayes: predictionState.naiveBayes,
         });
       } else {
-        setSupervisedLearningPredictions({
+        predictionState.error =
+          result.data?.supervisedLearningClassificationPrediction?.errors[0]?.message;
+        setCarsPredictions({
           ...predictionState,
-          knn: {
-            ...predictionState.knn,
-            error:
-              result.data?.supervisedLearningPrediction?.errors[0]?.message,
-          },
+          error: predictionState.error,
         });
       }
-    });
 
-    setSupervisedLearningPredictions({
-      ...predictionState,
-      knn: {
-        ...predictionState.knn,
-        isLoading: predictionResult.fetching,
-      },
+      predictionState.isLoading = false;
+      setCarsPredictions({
+        ...predictionState,
+        isLoading: predictionState.isLoading,
+      });
     });
   };
 
