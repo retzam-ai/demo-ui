@@ -1,11 +1,18 @@
 import { gql } from 'urql';
 
 const TEST_SUPERVISED_LEARNING_MODELS = gql`
-  mutation SupervisedLearningPrediction($model: String!, $input: [Float]!) {
-    supervisedLearningPrediction(model: $model, input: $input) {
+  mutation SupervisedLearningClassificationPrediction(
+    $dataset: String!
+    $input: [Float]!
+  ) {
+    supervisedLearningClassificationPrediction(
+      dataset: $dataset
+      input: $input
+    ) {
       prediction {
         result {
           knn
+          naiveBayes
         }
       }
     }
