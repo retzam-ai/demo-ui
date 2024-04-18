@@ -10,7 +10,7 @@ export const demos: { name: string; items: Item[] }[] = [
     items: [
       {
         name: 'Classification Demo',
-        slug: 'supervised-learning-Classification',
+        slug: 'classification',
         description: 'Supervised learning classification demo projects',
       },
     ],
