@@ -9,7 +9,7 @@ export const demos: { name: string; items: Item[] }[] = [
     name: 'Supervised Learning',
     items: [
       {
-        name: 'Classification Demo',
+        name: 'Classification playground',
         slug: 'classification',
         description: 'Supervised learning classification demo projects',
       },

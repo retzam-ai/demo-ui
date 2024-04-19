@@ -12,7 +12,7 @@ export const DEFAULT_MODEL_QUERY_STATE: SupervisedLearningClassificationPredicti
 
 export const metadata: Metadata = {
   title: {
-    default: 'retzam.ai Demo Playground',
+    default: 'retzam.ai playground',
     template: '%s | Next.js App Router',
   },
   description:
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const WEBSITE_NAME = 'retzam.ai - Demo';
+export const WEBSITE_NAME = 'retzam.ai - playground';
 export const WEBSITE_AUTHOR = 'retzam.ai';
 
 // export const SERVER_URL = 'http://localhost:8000/graphql';
