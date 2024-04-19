@@ -11,8 +11,8 @@ export default function InjuryPageTitle() {
         <AlertDescription>
           <div className="prose prose-sm prose-invert max-w-none">
             <p className="mt-4">
-              For this demo project, we used a synthetic dataset of over a
-              thousand football players.
+              For this demo project, we used a synthetic dataset of a thousand
+              football players.
             </p>
             <p>
               You will input a football player&apos;s information like age,
