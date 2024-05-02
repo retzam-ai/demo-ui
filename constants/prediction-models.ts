@@ -9,4 +9,9 @@ export const PREDICTION_MODELS = [
     slug: 'naiveBayes',
     image: 'naive-bayes-evaluation.png',
   },
+  {
+    name: 'Logistic Regression',
+    slug: 'logisticRegression',
+    image: 'logistic-regression-evaluation.png',
+  },
 ];
