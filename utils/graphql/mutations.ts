@@ -13,6 +13,7 @@ const TEST_SUPERVISED_LEARNING_MODELS = gql`
         result {
           knn
           naiveBayes
+          logisticRegression
         }
       }
     }
