@@ -1,6 +1,6 @@
 import { TabGroup } from '#/ui/tab-group';
 import React from 'react';
-import { Category } from '../api/categories/category';
+import { Category } from '#/app/api/categories/category';
 
 const title = 'Supervised Learning';
 
@@ -27,6 +27,12 @@ export default async function Layout({
     {
       name: 'Injury',
       slug: 'injury',
+      parent: 'classification',
+      count: 0,
+    },
+    {
+      name: 'Machines',
+      slug: 'machines',
       parent: 'classification',
       count: 0,
     },
