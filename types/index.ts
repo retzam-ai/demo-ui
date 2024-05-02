@@ -21,6 +21,16 @@ export const injuryPredictionSchema = z.object({
   recoveryTime: z.coerce.number().min(1).max(6),
 });
 
+export const machinesPredictionSchema = z.object({
+  rotationSpeed: z.coerce.number().min(1168).max(2076),
+  torque: z.coerce.number().min(16.7).max(68.9),
+  toolWear: z.coerce.number().min(0).max(253),
+  twf: z.coerce.number().min(0).max(1),
+  hdf: z.coerce.number().min(0).max(1),
+  pwf: z.coerce.number().min(0).max(1),
+  osf: z.coerce.number().min(0).max(1),
+});
+
 export type SidebarLink = {
   title: string;
   label?: string;
@@ -33,6 +43,7 @@ export type SidebarLink = {
 export type SupervisedLearningClassificationPredictionType = {
   knn: string;
   naiveBayes: string;
+  logisticRegression: string;
   isLoading: boolean;
   error: string;
   triggered: boolean;
