@@ -166,11 +166,14 @@ function SupervisedPredictionForm({
           result.data.supervisedLearningClassificationPrediction.prediction.result.knn;
         predictionState.naiveBayes =
           result.data.supervisedLearningClassificationPrediction.prediction.result.naiveBayes;
+        predictionState.logisticRegression =
+          result.data.supervisedLearningClassificationPrediction.prediction.result.logisticRegression;
 
         setCarsPredictions({
           ...predictionState,
           knn: predictionState.knn,
           naiveBayes: predictionState.naiveBayes,
+          logisticRegression: predictionState.logisticRegression,
         });
       } else {
         predictionState.error =
