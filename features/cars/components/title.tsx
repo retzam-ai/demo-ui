@@ -31,6 +31,18 @@ export default function CarsPageTitle() {
               </a>
               .
             </p>
+            <p>
+              Here is a jupyter notebook pdf with the code for the K-Nearest
+              Neighbors solution{' '}
+              <a
+                className="font-bold text-blue-500"
+                href="/files/KNN-prediction-by-retzam-ai.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                here
+              </a>
+            </p>
           </div>
         </AlertDescription>
       </Alert>

@@ -31,6 +31,18 @@ export default function InjuryPageTitle() {
               </a>
               .
             </p>
+            <p>
+              Here is a jupyter notebook pdf with the code for the Naive Bayes
+              solution{' '}
+              <a
+                className="font-bold text-blue-500"
+                href="/files/Naive-Bayes-prediction-by-retzam-ai.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                here
+              </a>
+            </p>
           </div>
         </AlertDescription>
       </Alert>
