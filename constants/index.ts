@@ -5,6 +5,7 @@ export const DEFAULT_MODEL_QUERY_STATE: SupervisedLearningClassificationPredicti
   {
     knn: '',
     naiveBayes: '',
+    logisticRegression: '',
     triggered: false,
     isLoading: false,
     error: '',
