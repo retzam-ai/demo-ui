@@ -11,7 +11,7 @@ export default function MachinesPageTitle() {
         <AlertDescription>
           <div className="prose prose-sm prose-invert max-w-none">
             <p className="mt-4">
-              For this demo project, we used a dataset about 10,000 machines
+              For this demo project, we used a dataset of about 10,000 machines
               with combustion engines data.
             </p>
             <p>

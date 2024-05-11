@@ -8,7 +8,6 @@ import { cloneDeep } from 'lodash';
 import { useMachinesStore } from '#/store/machines-store';
 
 export default function MachineModels() {
-  // Swap Naive Bayes with the first model
   const clone = cloneDeep(PREDICTION_MODELS);
   const slugToSwap = 'logisticRegression';
   const indexToSwap = clone.findIndex((item) => item.slug === slugToSwap);
