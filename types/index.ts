@@ -31,6 +31,16 @@ export const machinesPredictionSchema = z.object({
   osf: z.coerce.number().min(0).max(1),
 });
 
+export const marketingPredictionSchema = z.object({
+  age: z.coerce.number(),
+  gender: z.string(),
+  annualIncome: z.coerce.number(),
+  creditScore: z.coerce.number(),
+  employed: z.string(),
+  maritalStatus: z.string(),
+  noOfChildren: z.coerce.number(),
+});
+
 export type SidebarLink = {
   title: string;
   label?: string;
@@ -44,6 +54,7 @@ export type SupervisedLearningClassificationPredictionType = {
   knn: string;
   naiveBayes: string;
   logisticRegression: string;
+  svm: string;
   isLoading: boolean;
   error: string;
   triggered: boolean;
