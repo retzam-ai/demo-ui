@@ -36,6 +36,12 @@ export default async function Layout({
       parent: 'classification',
       count: 0,
     },
+    {
+      name: 'Marketing',
+      slug: 'marketing',
+      parent: 'classification',
+      count: 0,
+    },
   ];
 
   return (
