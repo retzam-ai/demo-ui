@@ -14,6 +14,7 @@ const TEST_SUPERVISED_LEARNING_MODELS = gql`
           knn
           naiveBayes
           logisticRegression
+          svm
         }
       }
     }
