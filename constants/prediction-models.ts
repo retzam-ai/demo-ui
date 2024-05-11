@@ -14,4 +14,9 @@ export const PREDICTION_MODELS = [
     slug: 'logisticRegression',
     image: 'logistic-regression-evaluation.png',
   },
+  {
+    name: 'Support Vector Machines',
+    slug: 'svm',
+    image: 'svm-evaluation.png',
+  },
 ];
