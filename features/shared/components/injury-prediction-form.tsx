@@ -152,12 +152,15 @@ function SupervisedPredictionForm({
           result.data.supervisedLearningClassificationPrediction.prediction.result.naiveBayes;
         predictionState.logisticRegression =
           result.data.supervisedLearningClassificationPrediction.prediction.result.logisticRegression;
+        predictionState.svm =
+          result.data.supervisedLearningClassificationPrediction.prediction.result.svm;
 
         setInjuryPredictions({
           ...predictionState,
           knn: predictionState.knn,
           naiveBayes: predictionState.naiveBayes,
           logisticRegression: predictionState.logisticRegression,
+          svm: predictionState.svm,
         });
       } else {
         predictionState.error =

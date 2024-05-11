@@ -168,12 +168,15 @@ function SupervisedPredictionForm({
           result.data.supervisedLearningClassificationPrediction.prediction.result.naiveBayes;
         predictionState.logisticRegression =
           result.data.supervisedLearningClassificationPrediction.prediction.result.logisticRegression;
+        predictionState.svm =
+          result.data.supervisedLearningClassificationPrediction.prediction.result.svm;
 
         setCarsPredictions({
           ...predictionState,
           knn: predictionState.knn,
           naiveBayes: predictionState.naiveBayes,
           logisticRegression: predictionState.logisticRegression,
+          svm: predictionState.svm,
         });
       } else {
         predictionState.error =
@@ -350,7 +353,7 @@ function SupervisedPredictionForm({
                           onValueChange={field.onChange}
                         >
                           <SelectTrigger className="h-auto text-left">
-                            <SelectValue placeholder="Manual" />
+                            <SelectValue placeholder="Select" />
                           </SelectTrigger>
                           <SelectContent>
                             {CAR_TRANSMISSIONS?.map((transmission, index) => (
@@ -389,7 +392,7 @@ function SupervisedPredictionForm({
                           onValueChange={field.onChange}
                         >
                           <SelectTrigger className="h-auto text-left">
-                            <SelectValue placeholder="Manual" />
+                            <SelectValue placeholder="Select" />
                           </SelectTrigger>
                           <SelectContent>
                             {CAR_FUEL_TYPES?.map((type, index) => (
