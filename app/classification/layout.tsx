@@ -42,6 +42,12 @@ export default async function Layout({
       parent: 'classification',
       count: 0,
     },
+    {
+      name: 'Diabetes',
+      slug: 'diabetes',
+      parent: 'classification',
+      count: 0,
+    },
   ];
 
   return (
