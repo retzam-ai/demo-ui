@@ -34,5 +34,5 @@ export const metadata: Metadata = {
 export const WEBSITE_NAME = 'retzam.ai - playground';
 export const WEBSITE_AUTHOR = 'retzam.ai';
 
-export const SERVER_URL = 'http://localhost:8000/graphql';
-// export const SERVER_URL = 'https://api.retzam.info/graphql';
+// export const SERVER_URL = 'http://localhost:8000/graphql';
+export const SERVER_URL = 'https://api.retzam.info/graphql';
