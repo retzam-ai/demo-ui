@@ -15,6 +15,7 @@ const TEST_SUPERVISED_LEARNING_MODELS = gql`
           naiveBayes
           logisticRegression
           svm
+          randomForest
         }
       }
     }
