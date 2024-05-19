@@ -41,6 +41,17 @@ export const marketingPredictionSchema = z.object({
   noOfChildren: z.coerce.number(),
 });
 
+export const diabetesPredictionSchema = z.object({
+  gender: z.string(),
+  age: z.coerce.number(),
+  hypertension: z.coerce.number().min(0).max(1),
+  heartDisease: z.coerce.number().min(0).max(1),
+  smokingHistory: z.string(),
+  bmi: z.coerce.number(),
+  HbA1c: z.coerce.number(),
+  bloodGlucoseLevel: z.coerce.number(),
+});
+
 export type SidebarLink = {
   title: string;
   label?: string;
@@ -55,6 +66,7 @@ export type SupervisedLearningClassificationPredictionType = {
   naiveBayes: string;
   logisticRegression: string;
   svm: string;
+  randomForest: string;
   isLoading: boolean;
   error: string;
   triggered: boolean;
