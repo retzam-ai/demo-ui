@@ -19,4 +19,9 @@ export const PREDICTION_MODELS = [
     slug: 'svm',
     image: 'svm-evaluation.png',
   },
+  {
+    name: 'Random Forest',
+    slug: 'randomForest',
+    image: 'random-forest-evaluation.png',
+  },
 ];
