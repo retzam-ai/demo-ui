@@ -1,6 +1,6 @@
 'use client';
 
-import { PREDICTION_MODELS } from '#/constants/prediction-models';
+import { CLASSIFICATION_PREDICTION_MODELS } from '#/constants/prediction-models';
 import { Card, CardContent, CardHeader, CardTitle } from '#/components/ui/card';
 import Image from 'next/image';
 import { SupervisedLearningClassificationPredictionType } from '#/types';
@@ -9,7 +9,7 @@ import { useDiabetesStore } from '#/store/diabetes-store';
 
 export default function DiabetesModels() {
   // Swap Naive Bayes with the first model
-  const clone = cloneDeep(PREDICTION_MODELS);
+  const clone = cloneDeep(CLASSIFICATION_PREDICTION_MODELS);
   const slugToSwap = 'randomForest';
   const indexToSwap = clone.findIndex((item) => item.slug === slugToSwap);
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { PREDICTION_MODELS } from '#/constants/prediction-models';
+import { CLASSIFICATION_PREDICTION_MODELS } from '#/constants/prediction-models';
 import { Card, CardContent, CardHeader, CardTitle } from '#/components/ui/card';
 import Image from 'next/image';
 import { SupervisedLearningClassificationPredictionType } from '#/types';
@@ -9,7 +9,7 @@ import { cloneDeep } from 'lodash';
 
 export default function InjuryModels() {
   // Swap Naive Bayes with the first model
-  const clone = cloneDeep(PREDICTION_MODELS);
+  const clone = cloneDeep(CLASSIFICATION_PREDICTION_MODELS);
   const slugToSwap = 'naiveBayes';
   const indexToSwap = clone.findIndex((item) => item.slug === slugToSwap);
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { PREDICTION_MODELS } from '#/constants/prediction-models';
+import { CLASSIFICATION_PREDICTION_MODELS } from '#/constants/prediction-models';
 import { Card, CardContent, CardHeader, CardTitle } from '#/components/ui/card';
 import Image from 'next/image';
 import { SupervisedLearningClassificationPredictionType } from '#/types';
@@ -8,7 +8,7 @@ import { cloneDeep } from 'lodash';
 import { useMachinesStore } from '#/store/machines-store';
 
 export default function MachineModels() {
-  const clone = cloneDeep(PREDICTION_MODELS);
+  const clone = cloneDeep(CLASSIFICATION_PREDICTION_MODELS);
   const slugToSwap = 'logisticRegression';
   const indexToSwap = clone.findIndex((item) => item.slug === slugToSwap);
 

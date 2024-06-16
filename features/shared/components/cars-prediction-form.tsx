@@ -25,7 +25,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { carsPredictionSchema } from '#/types';
 import { useMutation } from 'urql';
-import { TEST_SUPERVISED_LEARNING_MODELS } from '#/utils/graphql/mutations';
+import { SUPERVISED_LEARNING_CLASSIFICATION_MODELS } from '#/utils/graphql/mutations';
 import { useState } from 'react';
 import {
   Select,
@@ -116,7 +116,7 @@ function SupervisedPredictionForm({
 }: SupervisedPredictionFormProps) {
   const { predictions, setCarsPredictions } = useCarsStore();
   const [predictionResult, predictionMutation] = useMutation(
-    TEST_SUPERVISED_LEARNING_MODELS,
+    SUPERVISED_LEARNING_CLASSIFICATION_MODELS,
   );
 
   const predictionState = cloneDeep(predictions);

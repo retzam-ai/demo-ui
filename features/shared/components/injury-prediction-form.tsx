@@ -11,7 +11,13 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '#/components/ui/drawer';
-import { Form, FormField, FormItem, FormControl } from '#/components/ui/form';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormControl,
+  FormMessage,
+} from '#/components/ui/form';
 import { Input } from '#/components/ui/input';
 import { Label } from '#/components/ui/label';
 import { useForm } from 'react-hook-form';
@@ -19,7 +25,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { injuryPredictionSchema } from '#/types';
 import { useMutation } from 'urql';
-import { TEST_SUPERVISED_LEARNING_MODELS } from '#/utils/graphql/mutations';
+import { SUPERVISED_LEARNING_CLASSIFICATION_MODELS } from '#/utils/graphql/mutations';
 import { useState } from 'react';
 import useMediaQuery from '#/hooks/use-media-query';
 import {
@@ -102,7 +108,7 @@ function SupervisedPredictionForm({
 }: SupervisedPredictionFormProps) {
   const { predictions, setInjuryPredictions } = useInjuryStore();
   const [predictionResult, predictionMutation] = useMutation(
-    TEST_SUPERVISED_LEARNING_MODELS,
+    SUPERVISED_LEARNING_CLASSIFICATION_MODELS,
   );
 
   const predictionState = cloneDeep(predictions);
@@ -205,6 +211,7 @@ function SupervisedPredictionForm({
                           className="w-full"
                         />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -227,6 +234,7 @@ function SupervisedPredictionForm({
                           className="w-full"
                         />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -251,6 +259,7 @@ function SupervisedPredictionForm({
                           className="w-full"
                         />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -273,6 +282,7 @@ function SupervisedPredictionForm({
                           className="w-full"
                         />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -297,6 +307,7 @@ function SupervisedPredictionForm({
                           className="w-full"
                         />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -319,6 +330,7 @@ function SupervisedPredictionForm({
                           className="w-full"
                         />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />

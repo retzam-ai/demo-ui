@@ -1,6 +1,6 @@
 'use client';
 
-import { PREDICTION_MODELS } from '#/constants/prediction-models';
+import { CLASSIFICATION_PREDICTION_MODELS } from '#/constants/prediction-models';
 import { useCarsStore } from '#/store/cars-store';
 import { Card, CardContent, CardHeader, CardTitle } from '#/components/ui/card';
 import { Check } from 'lucide-react';
@@ -10,7 +10,7 @@ import { SupervisedLearningClassificationPredictionType } from '#/types';
 export default function CarsModels() {
   return (
     <>
-      {PREDICTION_MODELS.map((model) => (
+      {CLASSIFICATION_PREDICTION_MODELS.map((model) => (
         <PredictionModelsItem
           key={model.slug}
           slug={model.slug}

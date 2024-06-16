@@ -23,10 +23,16 @@ import { Label } from '#/components/ui/label';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { machinesPredictionSchema } from '#/types';
 import { useMutation } from 'urql';
-import { SUPERVISED_LEARNING_CLASSIFICATION_MODELS } from '#/utils/graphql/mutations';
+import { SUPERVISED_LEARNING_REGRESSION_MODELS } from '#/utils/graphql/mutations';
 import { useState } from 'react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '#/components/ui/select';
 import useMediaQuery from '#/hooks/use-media-query';
 import {
   Dialog,
@@ -36,11 +42,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '#/components/ui/dialog';
-import { useCarsStore } from '#/store/cars-store';
 import { cloneDeep } from 'lodash';
-import { useMachinesStore } from '#/store/machines-store';
+import { housePredictionSchema } from '#/types/regression';
+import { useHousesStore } from '#/store/regression/houses-store';
+import { NEIGHBORHOODS } from '#/constants/regression/houses';
 
-export default function MachinesPredictionForm() {
+export default function HousesPredictionForm() {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery('(min-width: 768px)');
 
@@ -53,15 +60,14 @@ export default function MachinesPredictionForm() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="outline" className="w-full bg-white text-black">
-            Predict Machine Failure
+            Predict House Price
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Predict Machine Failure</DialogTitle>
+            <DialogTitle>Predict House Price</DialogTitle>
             <DialogDescription>
-              Enter the machine&rsquo;s details below to get a prediction if
-              it&rsquo;ll fail or not.
+              Enter house details below to get a price prediction.
             </DialogDescription>
           </DialogHeader>
           <SupervisedPredictionForm {...{ onFormSubmitted }} />
@@ -74,16 +80,15 @@ export default function MachinesPredictionForm() {
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button className="w-full bg-white text-black" variant="outline">
-          Predict Machine Failure
+          Predict House Price
         </Button>
       </DrawerTrigger>
       <DrawerContent className="overflow-x-scroll">
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
-            <DrawerTitle>Predict Machine Failure</DrawerTitle>
+            <DrawerTitle>Predict House Price</DrawerTitle>
             <DrawerDescription>
-              Enter the machine&rsquo;s details below to get a prediction if
-              it&rsquo;ll fail or not.
+              Enter house details below to get a price prediction.
             </DrawerDescription>
           </DrawerHeader>
           <div className="overflow-auto">
@@ -107,83 +112,73 @@ interface SupervisedPredictionFormProps {
 function SupervisedPredictionForm({
   onFormSubmitted,
 }: SupervisedPredictionFormProps) {
-  const { predictions, setMachinesPredictions } = useMachinesStore();
+  const { predictions, setHousesPredictions } = useHousesStore();
   const [predictionResult, predictionMutation] = useMutation(
-    SUPERVISED_LEARNING_CLASSIFICATION_MODELS,
+    SUPERVISED_LEARNING_REGRESSION_MODELS,
   );
 
   const predictionState = cloneDeep(predictions);
 
-  const form = useForm<z.infer<typeof machinesPredictionSchema>>({
+  const form = useForm<z.infer<typeof housePredictionSchema>>({
     defaultValues: {},
-    resolver: zodResolver(machinesPredictionSchema),
+    resolver: zodResolver(housePredictionSchema),
   });
 
-  const onSubmit = async (data: z.infer<typeof machinesPredictionSchema>) => {
+  const onSubmit = async (data: z.infer<typeof housePredictionSchema>) => {
     predictionState.triggered = true;
-    setMachinesPredictions({
+    setHousesPredictions({
       ...predictionState,
       triggered: predictionState.triggered,
     });
 
     // Create array of data in required order
     const input = [];
-    input.push(data.rotationSpeed);
-    input.push(data.torque);
-    input.push(data.toolWear);
-    input.push(data.twf);
-    input.push(data.hdf);
-    input.push(data.pwf);
-    input.push(data.osf);
+    input.push(data.squareFeet);
+    input.push(data.bedrooms);
+    input.push(data.bathrooms);
+    input.push(data.yearBuilt);
+    input.push(parseInt(data.neigborhood));
 
-    const variables = {
-      input: input,
+    const params = {
+      simple: [data.squareFeet],
+      multiple: input,
     };
 
-    // K-Nearest Neighbors Predicition
+    // K-Nearest Neighbors Prediction
     onFormSubmitted();
-    await predict(variables);
+    await predict(params);
   };
 
-  const predict = async (variables: { input: number[] }) => {
+  const predict = async (params: { simple: number[]; multiple: number[] }) => {
     predictionState.isLoading = true;
-    setMachinesPredictions({
+    setHousesPredictions({
       ...predictionState,
       isLoading: predictionState.isLoading,
     });
 
-    predictionMutation({ ...variables, dataset: 'machines' }).then((result) => {
-      if (result.data?.supervisedLearningClassificationPrediction?.prediction) {
-        predictionState.knn =
-          result.data.supervisedLearningClassificationPrediction.prediction.result.knn;
-        predictionState.naiveBayes =
-          result.data.supervisedLearningClassificationPrediction.prediction.result.naiveBayes;
-        predictionState.logisticRegression =
-          result.data.supervisedLearningClassificationPrediction.prediction.result.logisticRegression;
-        predictionState.svm =
-          result.data.supervisedLearningClassificationPrediction.prediction.result.svm;
-        predictionState.randomForest =
-          result.data.supervisedLearningClassificationPrediction.prediction.result.randomForest;
+    predictionMutation(params).then((result) => {
+      if (result.data?.supervisedLearningRegressionPrediction?.prediction) {
+        predictionState.simpleLinearRegression =
+          result.data.supervisedLearningRegressionPrediction.prediction.result.simpleLinearRegression;
+        predictionState.multipleLinearRegression =
+          result.data.supervisedLearningRegressionPrediction.prediction.result.multipleLinearRegression;
 
-        setMachinesPredictions({
+        setHousesPredictions({
           ...predictionState,
-          knn: predictionState.knn,
-          naiveBayes: predictionState.naiveBayes,
-          logisticRegression: predictionState.logisticRegression,
-          svm: predictionState.svm,
-          randomForest: predictionState.randomForest,
+          simpleLinearRegression: predictionState.simpleLinearRegression,
+          multipleLinearRegression: predictionState.multipleLinearRegression,
         });
       } else {
         predictionState.error =
           result.data?.supervisedLearningClassificationPrediction?.errors[0]?.message;
-        setMachinesPredictions({
+        setHousesPredictions({
           ...predictionState,
           error: predictionState.error,
         });
       }
 
       predictionState.isLoading = false;
-      setMachinesPredictions({
+      setHousesPredictions({
         ...predictionState,
         isLoading: predictionState.isLoading,
       });
@@ -199,17 +194,17 @@ function SupervisedPredictionForm({
               <div className="col-span-6">
                 <FormField
                   control={form.control}
-                  name="rotationSpeed"
+                  name="squareFeet"
                   render={({ field }) => (
                     <FormItem className="flex flex-col items-center justify-between space-x-4">
-                      <Label htmlFor="rotationSpeed" className="text-right">
-                        Rotation speed
+                      <Label htmlFor="year" className="text-right">
+                        Square Feet
                       </Label>
                       <FormControl>
                         <Input
                           type="number"
                           {...field}
-                          placeholder="e.g 1999"
+                          placeholder="e.g 2500"
                           className="w-full"
                         />
                       </FormControl>
@@ -222,65 +217,17 @@ function SupervisedPredictionForm({
               <div className="col-span-6">
                 <FormField
                   control={form.control}
-                  name="torque"
+                  name="bedrooms"
                   render={({ field }) => (
                     <FormItem className="flex flex-col items-center justify-between space-x-4">
-                      <Label htmlFor="torque" className="text-right">
-                        Torque
+                      <Label htmlFor="price" className="text-right">
+                        Bedrooms
                       </Label>
                       <FormControl>
                         <Input
                           type="number"
                           {...field}
-                          placeholder="e.g 25"
-                          className="w-full"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
-
-            <div className="my-2 grid grid-cols-12 gap-4 space-x-2">
-              <div className="col-span-6">
-                <FormField
-                  control={form.control}
-                  name="toolWear"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col items-center justify-between space-x-4">
-                      <Label htmlFor="toolWear" className="text-right">
-                        Tool wear
-                      </Label>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          {...field}
-                          placeholder="e.g 100"
-                          className="w-full"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div className="col-span-6">
-                <FormField
-                  control={form.control}
-                  name="twf"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col items-center justify-between space-x-4">
-                      <Label htmlFor="twf" className="text-right">
-                        TWF
-                      </Label>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          {...field}
-                          placeholder="0 or 1"
+                          placeholder="e.g 2"
                           className="w-full"
                         />
                       </FormControl>
@@ -295,17 +242,17 @@ function SupervisedPredictionForm({
               <div className="col-span-6">
                 <FormField
                   control={form.control}
-                  name="pwf"
+                  name="bathrooms"
                   render={({ field }) => (
                     <FormItem className="flex flex-col items-center justify-between space-x-4">
-                      <Label htmlFor="pwf" className="text-right">
-                        PWF
+                      <Label htmlFor="mileage" className="text-right">
+                        Bathrooms
                       </Label>
                       <FormControl>
                         <Input
                           type="number"
                           {...field}
-                          placeholder="0 or 1"
+                          placeholder="e.g 1"
                           className="w-full"
                         />
                       </FormControl>
@@ -318,17 +265,17 @@ function SupervisedPredictionForm({
               <div className="col-span-6">
                 <FormField
                   control={form.control}
-                  name="osf"
+                  name="yearBuilt"
                   render={({ field }) => (
                     <FormItem className="flex flex-col items-center justify-between space-x-4">
-                      <Label htmlFor="osf" className="text-right">
-                        OSF
+                      <Label htmlFor="mpg" className="text-right">
+                        Year Built
                       </Label>
                       <FormControl>
                         <Input
                           type="number"
                           {...field}
-                          placeholder="0 or 1"
+                          placeholder="e.g 2001"
                           className="w-full"
                         />
                       </FormControl>
@@ -340,23 +287,39 @@ function SupervisedPredictionForm({
             </div>
 
             <div className="my-2 grid grid-cols-12 gap-4 space-x-2">
-              <div className="col-span-6">
+              <div className="col-span-12 flex items-center justify-center">
                 <FormField
                   control={form.control}
-                  name="hdf"
+                  name="neigborhood"
                   render={({ field }) => (
-                    <FormItem className="flex flex-col items-center justify-between space-x-4">
-                      <Label htmlFor="hdf" className="text-right">
-                        HDF
-                      </Label>
+                    <FormItem>
+                      <Label>Neighborhood</Label>
+
                       <FormControl>
-                        <Input
-                          type="number"
-                          {...field}
-                          placeholder="0 or 1"
-                          className="w-full"
-                        />
+                        <Select
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
+                          <SelectTrigger className="h-auto text-left">
+                            <SelectValue placeholder="Select" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {NEIGHBORHOODS?.map((neighborhood, index) => (
+                              <SelectItem
+                                key={index}
+                                value={neighborhood.value}
+                              >
+                                <div>
+                                  <h3 className="font-medium">
+                                    {neighborhood.label}
+                                  </h3>
+                                </div>
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </FormControl>
+
                       <FormMessage />
                     </FormItem>
                   )}
