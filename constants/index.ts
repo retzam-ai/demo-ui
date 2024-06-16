@@ -13,6 +13,14 @@ export const DEFAULT_MODEL_QUERY_STATE: SupervisedLearningClassificationPredicti
     error: '',
   };
 
+export const DEFAULT_REGRESSION_MODEL_QUERY_STATE = {
+  simpleLinearRegression: '',
+  multipleLinearRegression: '',
+  triggered: false,
+  isLoading: false,
+  error: '',
+};
+
 export const metadata: Metadata = {
   title: {
     default: 'retzam.ai playground',

@@ -1,4 +1,4 @@
-export const PREDICTION_MODELS = [
+export const CLASSIFICATION_PREDICTION_MODELS = [
   {
     name: 'K-Nearest Neighbors',
     slug: 'knn',
@@ -23,5 +23,18 @@ export const PREDICTION_MODELS = [
     name: 'Random Forest',
     slug: 'randomForest',
     image: 'random-forest-evaluation.png',
+  },
+];
+
+export const REGRESSION_PREDICTION_MODELS = [
+  {
+    name: 'Simple Linear Regression',
+    slug: 'simpleLinearRegression',
+    image: 'simple-linear-regression-evaluation.png',
+  },
+  {
+    name: 'Multiple Linear Regression',
+    slug: 'multipleLinearRegression',
+    image: 'multiple-linear-regression-evaluation.png',
   },
 ];

@@ -13,6 +13,11 @@ export const demos: { name: string; items: Item[] }[] = [
         slug: 'classification',
         description: 'Supervised learning classification demo projects',
       },
+      {
+        name: 'Regression playground',
+        slug: 'regression',
+        description: 'Supervised learning regression demo projects',
+      },
     ],
   },
   // {
