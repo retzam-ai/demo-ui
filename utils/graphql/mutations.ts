@@ -1,6 +1,6 @@
 import { gql } from 'urql';
 
-const TEST_SUPERVISED_LEARNING_MODELS = gql`
+export const SUPERVISED_LEARNING_CLASSIFICATION_MODELS = gql`
   mutation SupervisedLearningClassificationPrediction(
     $dataset: String!
     $input: [Float]!
@@ -22,4 +22,21 @@ const TEST_SUPERVISED_LEARNING_MODELS = gql`
   }
 `;
 
-export { TEST_SUPERVISED_LEARNING_MODELS };
+export const SUPERVISED_LEARNING_REGRESSION_MODELS = gql`
+  mutation SupervisedLearningRegressionPrediction(
+    $simple: [Float]!
+    $multiple: [Float]!
+  ) {
+    supervisedLearningRegressionPrediction(
+      simple: $simple
+      multiple: $multiple
+    ) {
+      prediction {
+        result {
+          simpleLinearRegression
+          multipleLinearRegression
+        }
+      }
+    }
+  }
+`;
