@@ -2,7 +2,7 @@ import { TabGroup } from '#/ui/tab-group';
 import React from 'react';
 import { Category } from '#/app/api/categories/category';
 
-const title = 'Supervised Learning';
+const title = 'Classification - Supervised Learning';
 
 export const metadata = {
   title,

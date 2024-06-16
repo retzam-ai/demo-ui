@@ -15,18 +15,28 @@ export default function Page() {
         This shows the precision, recall and accuracy of the models. <br />
         It also shows prediction results for each model.
       </p>
-      <p>We have a few demo projects </p>
+      <p>We have a few demo projects. Classification models that predicts: </p>
 
       <ul>
         <li>
-          Classification models that predicts the manufacturer of a car based on
-          some features. <br />
+          The manufacturer of a car based on some features. <br />
           Try it <Link href="classification/cars">here</Link>
         </li>
         <li>
-          Classification models that predicts whether a football player would be
-          injured in their next match. <br />
+          Whether a football player would be injured in their next match. <br />
           Try it <Link href="classification/injury">here</Link>
+        </li>
+        <li>
+          Whether a machine would fail or not. <br />
+          Try it <Link href="classification/machines">here</Link>
+        </li>
+        <li>
+          If a person would respond to marketing or not. <br />
+          Try it <Link href="classification/marketing">here</Link>
+        </li>
+        <li>
+          If a person would test positive for diabetes or not. <br />
+          Try it <Link href="classification/diabetes">here</Link>
         </li>
       </ul>
     </div>
