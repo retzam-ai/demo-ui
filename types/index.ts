@@ -71,3 +71,11 @@ export type SupervisedLearningClassificationPredictionType = {
   error: string;
   triggered: boolean;
 };
+
+export type SupervisedLearningRegressionPredictionType = {
+  simpleLinearRegression: string;
+  multipleLinearRegression: string;
+  isLoading: boolean;
+  error: string;
+  triggered: boolean;
+};
