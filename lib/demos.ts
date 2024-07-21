@@ -20,6 +20,17 @@ export const demos: { name: string; items: Item[] }[] = [
       },
     ],
   },
+  {
+    name: 'Unsupervised Learning',
+    items: [
+      {
+        name: 'KMeans and PCA playground',
+        slug: 'unsupervised',
+        description:
+          'Unsupervised learning KMeans clustering and PCA demo project',
+      },
+    ],
+  },
   // {
   //   name: 'Layouts',
   //   items: [
