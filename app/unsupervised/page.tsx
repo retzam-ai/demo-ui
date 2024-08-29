@@ -30,7 +30,7 @@ export default function Page() {
       <p>
         The examined group comprised kernels belonging to three different
         varieties of wheat: Kama, Rosa and Canadian, 70 elements each, randomly
-        selected for the experiment
+        selected for the experiment.
       </p>
 
       <p>
